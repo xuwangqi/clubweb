@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dogoo.club.manager.mapper.ClubActUserMapper">
+	<select id="queryUserInAct" resultType="int">
+		select count(cau_uid)
+		from club_act_user where ca_uid=#{caUid} and
+		user_uid=#{userUid}
+	</select>
+
+	<insert id="inertClubAct" parameterType="ClubActUser">
+		insert into
+		club_act_user(cau_uid,ca_uid,user_uid,user_name,cau_time,user_id)
+		values(#{cauUid},#{caUid},#{userUid},#{userName},#{cauTime},#{userId})
+	</insert>
+
+	<delete id="deleteClubAct">
+		delete from club_act_user where ca_uid=#{caUid} and
+		user_uid=#{userUid}
+	</delete>
+
+  <select id="querActUser" resultType="ClubActUser">
+		select * from club_act_user
+		where user_uid=#{userUid} and ca_uid = #{caUid}
+	</select>
+
+	<select id="queryMyAct" resultType="ClubActUser">
+		select * from club_act_user
+		where user_uid=#{userUid}
+	</select>
+
+	<select id="queryUserBycaUid" resultType="ClubActUser">
+		select * from
+		club_act_user where ca_uid=#{caUid}
+	</select>
+
+    <select id="queryUserBycaUidByLimit" resultType="ClubActUser">
+		select * from
+		club_act_user where ca_uid=#{caUid} limit #{start},#{rows}
+	</select>
+	
+   <select id="queryUserBycaUidTotal" resultType="int">
+		select count(cau_uid) from
+		club_act_user where ca_uid=#{caUid}
+	</select>
+
+
+	<update id="updateUserInAct" parameterType="ClubActUser">
+		update club_act_user set cau_score=#{cauScore},
+		cau_exscore = #{cauExscore},ca_score=#{caScore},cau_msg=#{cauMsg}
+		where cau_uid=#{cauUid}
+	</update>
+
+	<update id="updateUserInActScore">
+	 update club_act_user set cau_score=#{score}
+	 where ca_uid=#{caUid} and user_uid in  
+	<foreach collection="idss" item="empnoItem" open="("
+			separator="," close=")">
+			#{empnoItem}
+		</foreach>
+	</update>
+
+
+    <update id="updateUserPF">
+    update club_act_user set ca_score = #{score} ,
+    cau_msg = #{msg} where ca_uid=#{caUid} and user_uid=#{userUid}
+    
+    </update>
+
+</mapper>

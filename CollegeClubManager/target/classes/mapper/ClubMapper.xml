@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dogoo.club.manager.mapper.ClubMapper">
+
+	<select id="queryList"  resultType="Club">
+		select * from club_club  where club_type=#{clubType} limit #{start},#{rows}
+	</select>
+	<select id="queryCount" resultType="int">
+		select count(club_uid) from club_club where club_type=#{clubType}
+	</select>
+	<select id="queryClubByUid" parameterType="string" resultType="Club">
+	select * from club_club where club_uid=#{uid}
+	</select>
+	
+	<insert id="insertClub"  parameterType="Club">
+	insert into club_club(
+	club_uid,club_id,club_name,club_say,user_id,user_name,club_nownum,
+	club_totalnum,club_logourl,club_time,club_desc	
+	) values(#{clubUid},#{clubId},#{clubName},#{clubSay},#{userId}
+	,#{userName},#{clubNownum},#{clubTotalnum},#{clubLogourl},#{clubTime},#{clubDesc})	
+	</insert>
+	
+	<update id="updateClub" parameterType="Club">
+	update club_club set 
+	club_name=#{clubName},club_say=#{clubSay},
+	club_totalnum=#{clubTotalnum},club_logourl=#{clubLogourl}
+	,club_desc=#{clubDesc}
+	where club_uid=#{clubUid}
+	</update>
+	
+	<delete id="deleteClub" parameterType="String">
+	delete from club_club where club_uid in
+	<foreach item="empnoItem" collection="array" open="(" separator="," close=")">
+            #{empnoItem}
+        </foreach>
+	
+	</delete>
+	
+	<select id="queryclubByClubid" parameterType="ClubChoose" resultType="Club">	
+	select * from club_club where club_uid in
+	<foreach item="empnoItem" collection="list" open="(" separator="," close=")">
+            #{empnoItem.clubUid}
+        </foreach>
+	</select>
+	
+	
+   <update id="updateClubNowNumer">
+   update club_club set club_nownum=club_nownum+#{type} where club_uid=#{clubUid} 
+   </update>
+	
+  <update id="updatepass">
+	update  club_club  set club_type=#{type} where club_uid in
+	<foreach  collection="idss" item="empnoItem" open="(" separator="," close=")">
+            #{empnoItem}
+        </foreach>
+	
+	</update>
+	
+</mapper>

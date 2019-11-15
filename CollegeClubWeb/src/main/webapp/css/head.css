@@ -1,0 +1,113 @@
+/*header*/
+header {
+	width: 100%;
+	height: 40px;
+	background: #333
+} 
+
+header .top {
+	width: 1226px;
+	height: 40px;
+	line-height: 40px;
+}
+
+header .top .left ul li {
+	float: left;
+	font-size: 12px;
+	color: #ccc;
+}
+
+header .top .left ul li a {
+	display: block;
+	padding: 0 10px;
+	font-size: 12px;
+	font-family: Times New Roman;
+	color: #b0b0b0;
+}
+
+header .top .left ul li a:hover {
+	color: #fff;
+}
+
+header .top .right ul li {
+	float: left;
+	font-size: 12px;
+	color: #ccc;
+}
+
+header .top .right ul li a {
+	display: block;
+	padding: 0 8px;
+	font-size: 12px;
+	font-family: Times New Roman;
+	color: #b0b0b0;
+}
+
+header .top .right ul li a:hover {
+	color: #fff;
+}
+
+header .top .right .gouwuche a {
+	color: #fff;
+}
+
+
+header.search .text:hover {
+	border-color: #ff6700;
+}
+
+
+header  .loginin {
+	border: none;
+	height: 28px;
+	margin-right:10px;
+	color: #555;
+    padding: 0px 12px;
+}
+
+header  .shuru {
+	border: none;
+	width: 150px;
+	height: 28px;
+	margin-right:10px;
+	color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0px 12px;
+}
+
+header .submit {
+	width: auto;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 12px;
+	margin-top: 4px;
+	margin-right:10px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+    background-color: #fb6470;
+    color: #fff;
+    border: 0;
+    padding:0 15px;
+    
+}
+
+header .submit:hover {
+	color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+
+footer {
+	width: 100%;
+	height: auto;
+	line-height: 30px;
+	text-align: center;
+	font-size: 12px;
+	background: rgb(250, 250, 250);
+	padding: 30px 0;
+}

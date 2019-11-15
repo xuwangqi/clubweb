@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dogoo.club.manager.mapper.ClubChooseMapper">
+
+	<select id="queryCountByUC" resultType="int">
+		select count(cu_uid) from
+		club_choose where user_uid=#{userUid} and
+		club_uid=#{clubUid}
+	</select>
+	<insert id="insertClub" parameterType="ClubChoose">
+		insert into club_choose(cu_uid,user_uid,club_uid,cu_time,cu_type)
+		values (#{cuUid},#{userUid},#{clubUid},#{cuTime},#{cuType})
+	</insert>
+	<select id="queryclubsByuserId" resultType="ClubChoose"
+		parameterType="String">
+		select * from club_choose where user_uid=#{userId}
+	</select>
+
+	<select id="getUserByuid" resultType="User">
+		select * from club_user where user_uid=#{userUid}
+	</select>
+
+	<select id="queryClubUserCount" resultType="int" parameterType="String">
+		select count(cu_uid) from club_choose where club_uid=#{clubUid}
+	</select>
+
+	<delete id="deleteClubChoose">
+		delete from club_choose where club_uid=#{clubUid} and user_uid=#{userUid}
+	</delete>
+
+
+
+	<!-- 连表查询 -->
+	<resultMap type="ClubChoose" id="ccRM">
+		<id property="userUid" column="user_uid" />
+		<id property="clubUid" column="club_uid" />
+		<association property="user" javaType="User" column="user_uid"
+			select="queryUsers"></association>
+		<association property="club" javaType="Club" column="club_uid"
+			select="queryClub"></association>	
+	</resultMap>
+
+	<select id="queryusersByclubuid" resultMap="ccRM">
+		select * from club_choose where club_uid=#{clubUid}
+		<if test="start>=0">
+		 limit #{start},#{rows}
+		 </if>
+	</select>
+
+	<select id="queryUsers" parameterType="string" resultType="User">
+		select * from club_user where user_uid=#{userUid}
+	</select>
+
+	<select id="queryClub" parameterType="string" resultType="Club">
+		select * from club_club where club_uid=#{clubUid}
+	</select>
+
+
+  <update id="updatecuType">
+    update club_choose set cu_type=#{cuType} where club_uid=#{clubUid} and user_uid=#{userUid} 
+  </update>
+
+  <delete id="deleteClubs" parameterType="string">
+   delete from club_choose where club_uid in 
+   <foreach item="empnoItem" collection="array" open="(" separator="," close=")">
+            #{empnoItem}
+        </foreach>
+   
+  </delete>
+  
+  
+  <select id="queryclubUsercount" parameterType="string" resultType="int">
+   select count(cu_uid) from club_choose where club_uid = #{club_uid}
+  </select>
+  
+
+</mapper>

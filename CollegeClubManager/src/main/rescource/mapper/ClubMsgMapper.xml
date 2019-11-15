@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dogoo.club.manager.mapper.ClubMsgMapper">
+	<select id="queryMsgByLimit" resultType="ClubMsg">
+	select * from club_msg where club_uid = #{clubUid} order by cm_time desc
+	limit #{start},#{rows} 	
+	</select>
+	
+	<select id="queryMsgClubTotal" resultType="int">
+	select count(cm_uid) from club_msg where club_uid = #{clubUid}
+	</select>
+    
+    <insert id="insertMsg" parameterType="ClubMsg">
+    insert into club_msg(cm_uid,user_uid,user_name,
+    cm_title,cm_body,cm_time,club_uid) values(
+    #{cmUid},#{userUid},#{userName},
+    #{cmTitle},#{cmBody},#{cmTime},#{clubUid}
+    )
+    </insert>
+    
+</mapper>

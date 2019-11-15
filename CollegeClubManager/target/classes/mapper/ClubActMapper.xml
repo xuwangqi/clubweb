@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dogoo.club.manager.mapper.ClubActMapper">
+	<insert id="insertClubAct" parameterType="ClubActivity">
+		insert into club_act(ca_uid,club_uid,ca_title,ca_body
+		,ca_address,ca_number,ca_time,ca_grade,ca_file
+		,club_id,club_name) values(#{caUid},#{clubUid}
+		,#{caTitle},#{caBody},#{caAddress},#{caNumber},#{caTime},
+		#{caGrade},#{caFile},#{clubId},#{clubName})
+	</insert>
+
+	<update id="updateClubAct" parameterType="ClubActivity">
+		update club_act set ca_title=#{caTitle},ca_body=#{caBody}
+		,ca_address=#{caAddress},ca_number=#{caNumber},ca_time=#{caTime}
+		,ca_grade=#{caGrade},ca_file=#{caFile} where ca_uid=#{caUid}
+
+	</update>
+
+
+	<select id="queryClubAct" resultType="ClubActivity">
+		select * from club_act where ca_type = #{type} limit #{start},#{rows}
+	</select>
+	<select id="queryClubActCount" resultType="int">
+		select count(ca_uid) from club_act where ca_type = #{type}
+	</select>
+
+
+
+	<select id="queryClubActByClub" resultType="ClubActivity">
+		select * from club_act where club_uid=#{clubUid} and ca_type = #{type} limit
+		#{start},#{rows}
+	</select>
+	<select id="queryClubActCountByClub" resultType="int">
+		select count(ca_uid) from club_act where club_uid=#{clubUid} and ca_type =
+		#{type}
+	</select>
+
+	<select id="queryClubActDetail" parameterType="String"
+		resultType="ClubActivity">
+		select * from club_act where ca_uid=#{caUid}
+	</select>
+
+
+	<select id="queryCountClubActUser" parameterType="String"
+		resultType="int">
+		select count(cau_uid) from club_act_user where ca_uid=#{caUid}
+	</select>
+
+
+	<delete id="deleteClubAct" parameterType="String">
+		delete from club_act where ca_uid in
+		<foreach item="empnoItem" collection="array" open="("
+			separator="," close=")">
+			#{empnoItem}
+		</foreach>
+
+	</delete>
+	<update id="updateClubActPass">
+		update club_act set ca_type=#{type} where ca_uid in
+		<foreach collection="idss" item="empnoItem" open="("
+			separator="," close=")">
+			#{empnoItem}
+		</foreach>
+
+	</update>
+
+	<update id="updateClubActNowNumber">
+		update club_act set ca_nowNumber=#{number} where ca_uid=#{caUid}
+	</update>
+	
+	<select id="queryMyAct" resultType="ClubActivity">
+   select * from club_act where club_uid=#{clubUid} and 
+   ca_type=#{type} and ca_uid in
+	<foreach collection="user" item="empnoItem" open="("
+			separator="," close=")">
+			#{empnoItem.caUid}
+		</foreach>
+    limit #{start},#{rows}
+    </select>
+    <select id="queryMyActCount" resultType="int">
+	select count(ca_uid) from club_act where club_uid=#{clubUid} and  
+	ca_type=#{type} and ca_uid in
+	<foreach collection="user" item="empnoItem" open="("
+			separator="," close=")">
+			#{empnoItem.caUid}
+		</foreach>
+    </select>
+    
+    	<select id="queryMyAllAct" resultType="ClubActivity">
+   select * from club_act where
+   ca_type=#{type} and ca_uid in
+	<foreach collection="user" item="empnoItem" open="("
+			separator="," close=")">
+			#{empnoItem.caUid}
+		</foreach>
+    limit #{start},#{rows}
+    </select>
+    <select id="queryMyAllActCount" resultType="int">
+	select count(ca_uid) from club_act where
+	ca_type=#{type} and ca_uid in
+	<foreach collection="user" item="empnoItem" open="("
+			separator="," close=")">
+			#{empnoItem.caUid}
+		</foreach>
+    </select>
+    
+    
+    <update id="updateClubActScore">
+    update club_act set ca_score = #{score} where ca_uid = #{caUid}
+    </update>
+    
+</mapper>

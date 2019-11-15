@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dogoo.club.sso.mapper.UserMapper">
+
+	<select id="checkUserId"  parameterType="String" resultType="int">
+		select count(user_id) from club_user where user_id=#{userId}
+	</select>
+	
+	<insert id="insertUser" parameterType="User">
+	insert into club_user(
+	user_uid,
+	user_id,
+	user_password,
+	user_name,
+	user_gender,
+	user_class,
+	user_email,
+	user_QQ,
+	user_phone,
+	user_phonemin,
+	user_type	
+	)values(
+	#{userUid},
+	#{userId},
+	#{userPassword},
+	#{userName},
+	#{userGender},
+	#{userClass},
+	#{userEmail},
+	#{userQQ},
+	#{userPhone},
+	#{userPhonemin},
+	#{userType}
+	)
+	</insert>
+	
+	
+	<select id="checkLogin" parameterType="User" resultType="User">
+	select * from club_user where user_id=#{userId}
+    and user_password=#{userPassword}
+	</select>
+	
+	<update id="updateuserpassword">
+	update club_user set user_password = #{np} where user_id=#{userId} and
+	user_password=#{op}
+	</update> 
+	
+	<select id="queryList" resultType="User">
+	select * from club_user limit #{start},#{rows}
+	</select>
+	
+   <select id="queryAll" resultType="int">
+	select count(user_id) from club_user
+	</select>
+	
+	<update id="updateUser" parameterType="User">
+	update club_user set 
+	<if test="userPassword!=null">
+	user_password=#{userPassword},
+	</if>
+    user_name=#{userName},
+	user_gender=#{userGender},
+	user_class=#{userClass},
+	user_email=#{userEmail},
+	user_QQ=#{userQQ},
+	user_phone=#{userPhone},
+	user_phonemin=#{userPhonemin},
+	user_type=#{userType},
+	user_grade=#{userGrade}
+	where user_uid=#{userUid}
+	</update>
+	
+	<delete id="DeleteUserByIds" parameterType="String">
+	delete from club_user where user_uid in
+	<foreach item="empnoItem" collection="array" open="(" separator="," close=")">
+            #{empnoItem}
+        </foreach>
+	
+	</delete>
+	
+	<select id="queryUserByuserUid" parameterType="String" resultType="User">
+	select * from club_user where user_uid=#{userUid}
+	</select>
+	
+	
+	<update id="UpdateUserScore">
+	 update club_user set user_grade=user_grade+#{score}
+	 where user_uid in  
+	<foreach collection="idss" item="empnoItem" open="("
+			separator="," close=")">
+			#{empnoItem}
+		</foreach>
+	</update>
+	
+</mapper>
