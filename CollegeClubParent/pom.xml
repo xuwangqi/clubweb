@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
-			<version>5.5.2</version>
+			<version>6.8.15</version>
 		</dependency>
 		<!--两个过程的通信工具,系统通信的工具之一,发起代码内部的http请求  -->
 		<dependency>
